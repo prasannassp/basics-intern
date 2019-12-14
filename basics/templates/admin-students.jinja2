@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<meta name="description" content="Markup is a scientific method, based on modern analytics techniques, to measure students' knowledge. It will help in identifying where a student stands, and where he / she can improve.">
+	<meta name="author" content="Mark">
+	<link rel="icon" href={{request.static_url('basics:static/icons/markup.ico')}}>
+
+	<title>Students Mode | Admin Dashboard | MithSi |  Markup</title>
+
+	<link href={{request.static_url('basics:static/css/bootstrap.min.css')}} rel="stylesheet">
+	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+	<link href={{request.static_url('basics:static/css/main.css')}} rel="stylesheet">
+</head>
+
+<body onload="myfunc()">
+	<nav class="container navbar navbar-light bg-none shadow-sm w-100 z-index-5">
+		<div class=" px-5 mx-auto">
+			<a href="#home">
+				<div class="markup-square mx-auto"></div>
+			</a>
+			<ul class="nav nav-primary justify-content-center">
+				<li class="nav-item">
+					<a class="nav-link" href="#MithSi">MithSi</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="/logout">Log Out</a>
+				</li>
+			</ul>
+		</div>
+	</nav>
+
+	<nav class="container navbar navbar-light bg-none shadow-sm w-100 z-index-3">
+		<div class=" px-5 mx-auto">
+			<nav class="nav nav-secondary justify-content-center">
+				<a class="nav-link active" href="/admin-students">
+					<span class="d-sm-none" title="Students">St</span>
+					<span class="d-none d-sm-block">Students</span>
+				</a>
+				<a class="nav-link" href="/admin-professors">
+					<span class="d-sm-none" title="Professors">Pr</span>
+					<span class="d-none d-sm-block">Professors</span>
+				</a>
+				<a class="nav-link" href="/admin-link">
+					<span class="d-sm-none" title="Link">Li</span>
+					<span class="d-none d-sm-block">Link</span>
+				</a>
+				<a class="nav-link" href="/admin-snapshot">
+					<span class="d-sm-none" title="Snapshot">Sn</span>
+					<span class="d-none d-sm-block">Snapshot</span>
+				</a>
+				<a class="nav-link " href="/admin-syllabus">
+					<span class="d-sm-none" title="Syllabus">Sy</span>
+					<span class="d-none d-sm-block">Syllabus</span>
+				</a>
+			</nav>
+		</div>
+	</nav>
+
+	<div class="container shadow-sm z-index-1">
+		<div class="row">
+			<div class="col-lg-3 px-3 py-4 border border-left-0 border-right-0 border-top-0 bg-none">
+				<form class="mb-4">
+					<div class="form-group">
+						<label>Class</label>
+						<select class="form-control" id='classval' onchange="fetchdata()">
+							<option value="All" selected>All</option>
+						</select>
+					</div>
+				</form>
+				<form class="mb-4">
+					<div class="form-group">
+						<label>Section</label>
+						<select class="form-control" id='secval' onchange="fetchdata()">
+							<option value="All" selected>All</option>
+						</select>
+					</div>
+				</form>
+				<form class="mb-4">
+					<div class="form-group">
+						<label>Subject Group</label>
+						<select class="form-control" id='subval' onchange="fetchdata()">
+							<option value="All" selected>All</option>
+						</select>
+					</div>
+				</form>
+			</div>
+
+			<div class="col-lg-9 bg-white px-3 py-3 pt-4  border border-left-0 border-right-0 border-top-0 z-index-0">
+				<h2 class="text-center">Class:{{sel_class}} </h2>
+				<h5 class="text-center text-secondary">SECTION:{{sel_sec}} </h5>
+				<h5 class="text-center text-secondary mb-4">SUBJECT GROUP: {{sel_sub}}</h5>
+				<div class="row my-4 px-3">
+										
+					<script src="https://cdn.jsdelivr.net/npm/handsontable@5.0.0/dist/handsontable.full.min.js"></script>
+					<link href="https://cdn.jsdelivr.net/npm/handsontable@5.0.0/dist/handsontable.full.min.css" rel="stylesheet" media="screen"/>
+					<form action="/admin-students" method='POST'>
+					<input id="search_name" name="search_name" class="form-control form-control-md mb-3" type="text" placeholder="Search for Names"/>
+					<input type="submit" id="searchn" name="search" value="search" >
+				</form>
+					<div class="w-100" style="overflow: hidden; height: 75vh">
+					<h6 style="text-align:center;color:red">{{err}}</h6>
+							<div id="example1" class="hot"></div>
+							<script>
+								var d = ''
+								var example1 = document.getElementById('example1');
+								var hot = new Handsontable(example1, {
+									data: Handsontable.helper.createSpreadsheetData(6, 14),
+									stretchH: 'all',
+									rowHeaders: true,
+									colHeaders: [
+										'Name',
+										'Roll No',
+										'Reg. No.',
+										'Class',
+										'Section',
+										'Subject Group',
+										'Bday',
+										'Blood Group',
+										'Gender',
+										'Guardian',
+										'Email Id',
+										'Mobile No.',
+										'Annual Income',
+										'Password'
+									],
+									columnSorting: true,
+									sortIndicator: true,
+									autoColumnSize: {
+										samplingRatio: 23
+									},
+									fixedRowsTop: 0,
+									fixedColumnsLeft: 0,
+									manualRowResize: true,
+									manualColumnResize: true,
+									manualRowMove: true,
+									manualColumnMove: true,
+									contextMenu: false,
+									copyPaste: true,
+									minSpareRows: 20,
+									wordWrap: false,
+									search: true,
+									dropdownMenu: true
+								});
+							</script>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col bg-white px-3 py-3 text-right z-index-0">
+					<button type="button" class="btn btn-outline-primary mx-3" onclick='save_changes()'>Save Changes</button>
+<input type='text' name='leng' id='leng' value={{len}} > 
+<input type='text' name='names' id='names' value={{name}} > 
+<input type='hidden' name='rollno' id='rollno' value={{rollno}} > 
+<input type='text' name='regno' id='regno' value={{regno}} > 
+<input type='hidden' name='classname' id='classname' value={{classname}} > 
+<input type='hidden' name='sect' id='sect' value={{sec}} > 
+<input type='text' name='subgrp' id='subgrp' value={{subgrp}} > 
+<input type='hidden' name='bldgrp' id='bldgrp' value={{bldgrp}} > 
+<input type='hidden' name='gender' id='gender' value={{gender}} > 
+<input type='text' name='bday' id='bday' value={{bday}} > 
+<input type='hidden' name='gaurd' id='gaurd' value={{gaurd}} > 
+<input type='hidden' name='email' id='email' value={{email}} > 
+<input type='hidden' name='mobile' id='mobile' value={{mobile}} > 
+<input type='hidden' name='income' id='income' value={{income}} > 
+<input type='hidden' name='pwd' id='pwd' value={{password}} > 
+<form action="/admin-students" method="post"> 
+<input type='hidden' name='profdata' id='data' >
+<input type='submit' style="display:none" id='savedata' name='savedata' > 
+</form>
+				</div>
+			</div>
+		</div>
+	</div>
+	<footer class="container px-3 py-3">
+		<ul class="list-inline">
+			<li class="list-inline-item mr-3"><a href="/index-get-started">About</a></li>
+			<li class="list-inline-item mr-3"><a href="/index-get-started">How it works</a></li>
+			<li class="list-inline-item mr-3"><a href="/index-get-started">Pricing</a></li>
+			<li class="list-inline-item mr-3"><a href="/index-get-started">Blog</a></li>
+			<li class="list-inline-item mr-3"><a href="/index-get-started">Terms</a></li>
+			<li class="list-inline-item mr-3"><a href="/index-get-started">Privacy</a></li>
+			<li class="list-inline-item mr-3"><a href="/index-get-started">Disclosures</a></li>
+			<li class="list-inline-item mr-3"><a href="/index-get-started">Contact</a></li>
+		</ul>
+		<p class="text-secondary" id='rights'>Markup is a scientific method, based on modern analytics techniques, to measure students' knowledge. It will help in identifying where a student stands, and where he / she can improve.</p>
+		<p class="text-secondary">&copy; Markup. All rights reserved.</p>
+	</footer>
+
+<input type="text"  id="cls" value={{classes}} >
+<input type="text" id="sec" value={{sections}}  >
+<input type="text" id="sub" value={{subjects}}  >
+<form method="post" action="/admin-students">
+<input type="text" name ="sel_class" id="sel_class" value={{sel_class}}  >
+<input type="text" name="sel_sec" id="sel_sec" value={{sel_sec}} >
+<input type="text" name="sel_sub" id="sel_sub" value={{sel_sub}} >
+<input type="submit" style="display:none" id="submit" name="save" >
+</form>
+	<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+	<script src={{request.static_url('basics:static/js/bootstrap.min.js')}}></script>
+
+	<link rel="stylesheet" href="https://drvic10k.github.io/bootstrap-sortable/Contents/bootstrap-sortable.css" />
+	<script src="https://drvic10k.github.io/bootstrap-sortable/Scripts/bootstrap-sortable.js"></script>
+	<link href="https://fonts.googleapis.com/css?family=Roboto+Condensed" rel="stylesheet">
+<script>
+function save_changes()
+{
+var data = hot.getData()
+var ini = hot.countSourceRows()
+var end = hot.countEmptyRows()
+var rownum = ini - end
+var p = document.getElementById('rights')
+for (i =0;i<rownum;i++)
+{
+d += new Array(hot.getDataAtRow(i)) + "," ;
+}
+d = new Array(d);
+p.innerHTML = d;
+document.getElementById('data').value = d;
+document.getElementById('savedata').value = rownum;
+document.getElementById('savedata').click();
+}
+function myfunc()
+{
+selcls = document.getElementById('sel_class').value
+selsub = document.getElementById('sel_sub').value
+selsec = document.getElementById('sel_sec').value
+var sel_class = document.getElementById('classval')
+var ele = document.getElementById('cls')
+var val = ele.value
+var arr  = val.split(',')
+var l = arr.length
+for(var j = 0;j<l-1;j++)
+{
+var opt = document.createElement('option')
+opt.text = arr[j]
+if(arr[j] == selcls)
+{
+opt.selected = true
+}
+sel_class.add(opt)
+}
+var sel_sec = document.getElementById('secval')
+var ele = document.getElementById('sec')
+var val = ele.value
+var arr  = val.split(',')
+var l = arr.length
+for(var j = 0;j<l-1;j++)
+{
+var opt = document.createElement('option')
+opt.text = arr[j]
+if(arr[j] == selsec)
+{
+opt.selected = true
+}
+sel_sec.add(opt)
+}
+var sel_sub = document.getElementById('subval')
+var ele = document.getElementById('sub')
+var val = ele.value
+var arr  = val.split(',')
+var l = arr.length
+for(var j = 0;j<l-1;j++)
+{
+var opt = document.createElement('option')
+opt.text = arr[j]
+if(arr[j] == selsub)
+{
+opt.selected = true
+}
+sel_sub.add(opt)
+}
+var data = hot.getData()
+var ini = hot.countSourceRows()
+var end = hot.countEmptyRows()
+var rownum = ini - end
+var name = document.getElementById('names').value
+var rollno = document.getElementById('rollno').value
+var regno = document.getElementById('regno').value
+var classname = document.getElementById('classname').value
+var bday = document.getElementById('bday').value
+var sec = document.getElementById('sect').value
+var subgrp = document.getElementById('subgrp').value
+var bldgrp = document.getElementById('bldgrp').value
+var gender = document.getElementById('gender').value
+var gaurd = document.getElementById('gaurd').value
+var email = document.getElementById('email').value
+var mobile = document.getElementById('mobile').value
+var income = document.getElementById('income').value
+var pwd = document.getElementById('pwd').value
+name = name.substring(0, name.length-1);
+name = name.split(',')
+rollno = rollno.substring(0, rollno.length-1);
+rollno = rollno.split(',')
+regno = regno.substring(0, regno.length-1);
+regno = regno.split(',')
+classname = classname.substring(0, classname.length-1);
+classname = classname.split(',')
+sec = sec.substring(0, sec.length-1);
+sec = sec.split(',')
+bday = bday.substring(0, bday.length-1);
+bday = bday.split(',')
+subgrp = subgrp.substring(0, subgrp.length-1);
+subgrp = subgrp.split(',')
+bldgrp = bldgrp.substring(0, bldgrp.length-1);
+bldgrp = bldgrp.split(',')
+gender = gender.substring(0, gender.length-1);
+gender = gender.split(',')
+gaurd = gaurd.substring(0, gaurd.length-1);
+gaurd = gaurd.split(',')
+email = email.substring(0, email.length-1);
+email = email.split(',')
+mobile = mobile.substring(0, mobile.length-1);
+mobile = mobile.split(',')
+income = income.substring(0, income.length-1);
+income = income.split(',')
+pwd = pwd.substring(0, pwd.length-1);
+pwd = pwd.split(',')
+var len = name.length
+hot.clear()
+for(var f = 0;f<14;f++)
+{
+for(var i = 0;i<len;i++)
+{
+if(f == 0)
+{
+hot.setDataAtCell(i,f,name[i])
+}
+if(f == 1)
+{
+hot.setDataAtCell(i,f,rollno[i])
+}
+if(f == 2)
+{
+hot.setDataAtCell(i,f,regno[i])
+}
+if(f==3)
+{
+hot.setDataAtCell(i,f,classname[i])
+}
+if(f==4)
+{
+hot.setDataAtCell(i,f,sec[i])
+}
+if(f == 5)
+{
+hot.setDataAtCell(i,f,subgrp[i])
+}
+if(f == 6)
+{
+hot.setDataAtCell(i,f,bday[i])
+}
+if(f == 7)
+{
+hot.setDataAtCell(i,f,bldgrp[i])
+}
+if(f == 8)
+{
+hot.setDataAtCell(i,f,gender[i])
+}
+if(f == 9)
+{
+hot.setDataAtCell(i,f,gaurd[i])
+}
+if(f == 10)
+{
+hot.setDataAtCell(i,f,email[i])
+}
+if(f == 11)
+{
+hot.setDataAtCell(i,f,mobile[i])
+}
+if(f == 12)
+{
+hot.setDataAtCell(i,f,income[i])
+}
+if(f == 13)
+{
+hot.setDataAtCell(i,f,pwd[i])
+}
+}
+}
+}
+function fetchdata()
+{
+var sel_class = document.getElementById('classval')
+var sel_sec = document.getElementById('secval')
+var sel_sub = document.getElementById('subval')
+var cls = sel_class.options[sel_class.selectedIndex].text
+var sec = sel_sec.options[sel_sec.selectedIndex].text
+var sub = sel_sub.options[sel_sub.selectedIndex].text
+var sel_class_q = document.getElementById('sel_class')
+var sel_sec_q = document.getElementById('sel_sec')
+var sel_sub_q = document.getElementById('sel_sub')
+sel_class_q.value = cls
+sel_sec_q.value = sec
+sel_sub_q.value = sub
+var submit = document.getElementById('submit')
+submit.click()
+}
+function generateHtmlTable(data) {
+    var html = '<table  class="table table-condensed table-hover table-striped">';
+
+      if(typeof(data[0]) === 'undefined') {
+        return null;
+      } else {
+		$.each(data, function( index, row ) {
+		  //bind header
+		  if(index == 0) {
+			html += '<thead>';
+			html += '<tr>';
+			$.each(row, function( index, colData ) {
+				html += '<th>';
+				html += colData;
+				html += '</th>';
+			});
+			html += '</tr>';
+			html += '</thead>';
+			html += '<tbody>';
+		  } else {
+			html += '<tr>';
+			$.each(row, function( index, colData ) {
+				html += '<td>';
+				html += colData;
+				html += '</td>';
+			});
+			html += '</tr>';
+		  }
+		});
+		html += '</tbody>';
+		html += '</table>';
+		alert(html);
+		$('#csv-display').append(html);
+	  }
+	}
+</script>
+</body>
+</html>

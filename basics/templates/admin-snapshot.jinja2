@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<meta name="description" content="Markup is a scientific method, based on modern analytics techniques, to measure students' knowledge. It will help in identifying where a student stands, and where he / she can improve.">
+	<meta name="author" content="Mark">
+	<link rel="icon" href={{request.static_url('basics:static/icons/markup.ico')}}>
+
+	<title>Snapshot Mode | Admin Dashboard | MithSi |  Markup</title>
+
+	<link href={{request.static_url('basics:static/css/bootstrap.min.css')}} rel="stylesheet">
+	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+	<link href={{request.static_url('basics:static/css/main.css')}} rel="stylesheet">
+</head>
+
+<body onload="myfunc()">
+	<nav class="container navbar navbar-light bg-none shadow-sm w-100 z-index-5">
+		<div class=" px-5 mx-auto">
+			<a href="#home">
+				<div class="markup-square mx-auto"></div>
+			</a>
+			<ul class="nav nav-primary justify-content-center">
+				<li class="nav-item">
+					<a class="nav-link" href="#MithSi">MithSi</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="/logout">Log Out</a>
+				</li>
+			</ul>
+		</div>
+	</nav>
+
+	<nav class="container navbar navbar-light bg-none shadow-sm w-100 z-index-3">
+		<div class=" px-5 mx-auto">
+			<nav class="nav nav-secondary justify-content-center">
+				<a class="nav-link" href="/admin-students">
+					<span class="d-sm-none" title="Students">St</span>
+					<span class="d-none d-sm-block">Students</span>
+				</a>
+				<a class="nav-link" href="/admin-professors">
+					<span class="d-sm-none" title="Professors">Pr</span>
+					<span class="d-none d-sm-block">Professors</span>
+				</a>
+				<a class="nav-link" href='/admin-link'>
+					<span class="d-sm-none" title="Link">Li</span>
+					<span class="d-none d-sm-block">Link</span>
+				</a>
+				<a class="nav-link active" href="/admin-snapshot">
+					<span class="d-sm-none" title="Snapshot">Sn</span>
+					<span class="d-none d-sm-block">Snapshot</span>
+				</a>
+				<a class="nav-link " href="/admin-syllabus">
+					<span class="d-sm-none" title="Syllabus">Sy</span>
+					<span class="d-none d-sm-block">Syllabus</span>
+				</a>
+			</nav>
+		</div>
+	</nav>
+				<h6 style="text-align:center;color:red">{{err}}</h6>
+
+<form method="post" action="/admin-snapshot">
+	<div class="container shadow-sm z-index-1">
+
+		<div class="row">
+			<div class="col-lg-3 px-3 py-4 border border-left-0 border-right-0 border-top-0 bg-none">
+					<div class="form-group"  >
+						<label>Measure</label>
+						<select class="form-control" name="meaval" id="meaval" onchange="fetchdata()">
+							<option></option>
+							<option>Average</option>
+							<option>Median</option>
+							<option>Mode</option>
+							<option>Percentile</option>
+						</select>
+					</div>
+					<div class="form-group"  >
+						<label>Sample</label>
+						<select class="form-control" name="sampval" id="sampval" onchange="fetchdata()">
+							<option></option>
+							<option>School</option>
+							<option>Board</option>
+						</select>
+					</div>
+					<div class="form-group" >
+						<label>Workspace</label>
+						<select class="form-control" name="wsval" id="wsval" onchange="fetchdata()">
+						<option></option>
+						</select>
+					</div>
+			</div>
+			<div class="col-lg-9 bg-white px-3 py-3 pt-4  border border-left-0 border-right-0 border-top-0 z-index-0">
+				<h2 class="text-center">School Snapshot</h2>
+				<h5 class="text-center text-secondary mb-4">SAMPLE:{{sel_samp}}</h5>
+				<div class="row my-4">
+					<div class="col text-right border border-left-0 border-top-0 border-bottom-0">
+						<span class="text-secondary">YOUR SCORE</span>
+						<h1>{{final_total}}</h1>
+					</div>
+					<div class="col text-left">
+						<span class="text-secondary" >AVERAGE</span>
+						<h1>{{final_average}}</h1>
+					</div>
+				</div>
+				<div class="row my-4">
+						<div class="form-group">
+							<label>Student</label>
+							<select class="form-control" name="sel_stud" onchange="showorhide(this.id)" id="1">
+								<option>Yes</option>
+								<option>No</option>		
+							</select>
+						</div>
+						<div class="form-group" style="display:none">
+							<label>Percentile</label>
+							<select class="form-control" name="sel_perc" id="2">
+								<option>All</option>
+								<option>Top 5 Percentile</option>
+								<option>Top 10 Percentile</option>
+								<option>Top 20 Percentile</option>
+								<option>Top 40 Percentile</option>
+								<option>Top 60 Percentile</option>
+								<option>Bottom 60 Percentile</option>
+								<option>Bottom 40 Percentile</option>
+								<option>Bottom 20 Percentile</option>
+								<option>Bottom 10 Percentile</option>
+								<option>Bottom 5 Percentile</option>
+							</select>
+						</div>
+						<div class="form-group" >
+							<label>Class</label>
+							<select class="form-control" name="sel_cls" id="3" onchange="showorhide(this.id)">
+								<option selected>Yes</option>
+								<option>No</option>
+							</select>
+						</div>
+						<div class="form-group" >
+							<label>Section</label>
+							<select class="form-control" name="sel_sec" id="4" onchange="showorhide(this.id)">
+								<option>Yes</option>
+								<option>No</option>
+							</select>
+						</div>
+						<div class="form-group">
+							<label>Subject</label>
+							<select class="form-control" name="sel_sub" id="5" onchange="showorhide(this.id)">
+								<option>Yes</option>
+								<option>No</option>
+							</select>
+						</div>
+						<div class="form-group">
+							<label>Professor</label>
+							<select class="form-control" name="sel_prof" id="6" onchange="showorhide(this.id)">
+								<option>Yes</option>
+								<option>No</option>
+							</select>
+						</div>
+						<div class="form-group">
+							<label>Stud Gender</label>
+							<select class="form-control" name="sel_stud_gen" id="7" onchange="showorhide(this.id)">
+								<option>Yes</option>
+								<option>No</option>
+							</select>
+						</div>
+						<div class="form-group">
+							<label>Prof Gender</label>
+							<select class="form-control" name="sel_prof_gen" id="8" onchange="showorhide(this.id)">
+								<option>Yes</option>
+								<option>No</option>
+							</select>
+						</div>
+						<div class="form-group">
+							<label>Income</label>
+							<select class="form-control" name="sel_income" id="9" onchange="showorhide(this.id)">
+								<option>Yes</option>
+								<option>No</option>
+							</select>
+						</div>
+				</div>
+				<div class="row px-3 my-3">
+					<input class="form-control form-control-md mb-3" type="text" placeholder="Search..."/>
+					<div class="w-100 table-scroll-x">
+						<table class="table table-md table-hover sortable" id="table">
+							<thead>
+								<tr>
+									<th scope="col" id="stufil">Student</th>
+									<th scope="col" id="stugenfil">Stud Gender</th>
+									<th scope="col" id="incomefil">Income</th>
+									<th scope="col" id="classfil">Class</th>
+									<th scope="col" id="sectionfil">Section</th>
+									<th scope="col" id="subfil">Subject</th>
+									<th scope="col" id="proffil">Professor</th>
+									<th scope="col" id="profgenfil">Prof Gender</th>
+									<th scope="col" id="scorefil">Score</th>
+									<th scope="col">{{sel_mea}}</th>
+								</tr>
+							</thead>
+							<tbody>
+							{% if item is not none %}
+							{%for i,j in item %}
+								<tr>
+									<td id="stufil{{j[0]}}">{{i[0]}}</td>
+									<td id="stugenfil{{j[1]}}">{{i[1]}}</td>
+									<td id="incomefil{{j[2]}}">{{i[2]}}</td>
+									<td id="classfil{{j[3]}}">{{i[3]}}</td>
+									<td id="sectionfil{{j[4]}}">{{i[4]}}</td>
+									<td id="subfil{{j[5]}}">{{i[5]}}</td>
+									<td id="proffil{{j[6]}}">{{i[6]}}</td>
+									<td id="profgenfil{{j[7]}}">{{i[7]}}</td>
+									<td id="scorefil{{j[8]}}">{{i[8]}}</td>
+									<td id="meafil{{j[9]}}">{{i[9]}}</td>
+								</tr>
+								{%endfor%}
+								{%endif%}
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col bg-white px-3 py-3 text-right z-index-0">
+				<input type="submit" class="btn btn-outline-primary mx-3" name="submit" value="Save Workspace">
+			</div>
+		</div>
+
+	</div>
+</form>
+<input type="hidden" id="tms" value={{itms}} >
+<input type="hidden"  id="stud" value={{stud}} >
+<input type="hidden" id="perc" value={{perc}} >
+<input type="hidden"  id="cls" value={{cls}} >
+<input type="hidden"  id="sec" value={{sec}} >
+<input type="hidden"  id="sub"  value={{sub}} >
+<input type="hidden"  id="prof" value={{prof}} >
+<input type="hidden"  id="studgen" value={{studgen}} >
+<input type="hidden"  id="profgen" value={{profgen}} >
+<input type="hidden"  id="income" value={{income}} >
+<input type="hidden"  id="mea" value={{measure}} >
+<input type="hidden" id="samp"  value={{sample}} >
+<input type="hidden"  id="ws" value={{ws}} >
+<input type="hidden" id="len"  value={{len}} >
+
+<form method="post" action="/admin-snapshot" >
+<input type="hidden" name ="sel_mea" id="sel_mea" value = {{sel_mea}} >
+<input type="hidden" name ="sel_ws" id="sel_ws" value = {{sel_ws}} >
+<input type="hidden" name="sel_samp" id="sel_samp" value = {{sel_samp}} >
+<input type="submit" style="display:none" id="submit" name="save" >
+</form>
+	<footer class="container px-3 py-3">
+		<ul class="list-inline">
+			<li class="list-inline-item mr-3"><a href="/index-get-started">About</a></li>
+			<li class="list-inline-item mr-3"><a href="/index-get-started">How it works</a></li>
+			<li class="list-inline-item mr-3"><a href="/index-get-started">Pricing</a></li>
+			<li class="list-inline-item mr-3"><a href="/index-get-started">Blog</a></li>
+			<li class="list-inline-item mr-3"><a href="/index-get-started">Terms</a></li>
+			<li class="list-inline-item mr-3"><a href="/index-get-started">Privacy</a></li>
+			<li class="list-inline-item mr-3"><a href="/index-get-started">Disclosures</a></li>
+			<li class="list-inline-item mr-3"><a href="/index-get-started">Contact</a></li>
+		</ul>
+		<p class="text-secondary">Markup is a scientific method, based on modern analytics techniques, to measure students' knowledge. It will help in identifying where a student stands, and where he / she can improve.</p>
+		<p class="text-secondary">&copy; Markup. All rights reserved.</p>
+	</footer>
+
+	<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+	<script src={{request.static_url('basics:static/js/bootstrap.min.js')}}></script>
+
+	<link rel="stylesheet" href="https://drvic10k.github.io/bootstrap-sortable/Contents/bootstrap-sortable.css" />
+	<script src="https://drvic10k.github.io/bootstrap-sortable/Scripts/bootstrap-sortable.js"></script>
+
+	<link href="https://fonts.googleapis.com/css?family=Roboto+Condensed" rel="stylesheet">
+<script>
+
+function showorhide(myid)
+{
+var val = document.getElementById(myid).value
+var l = document.getElementById('len').value
+if(myid == 1)
+{
+if(val == 'Yes')
+{
+	document.getElementById('stufil').style.visibility = "visible"
+	for(var j = 0;j<l;j++)
+		{	
+		document.getElementById('stufil'+j).style.visibility = "visible"
+		}
+}
+else
+{
+	document.getElementById('stufil').style.visibility = "hidden"
+		for(var j = 0;j<l;j++)
+		{	
+		document.getElementById('stufil'+j).style.visibility = "hidden"
+		}
+}
+}
+
+
+if(myid == 7)
+{
+if(val == 'Yes')
+{
+	document.getElementById('stugenfil').style.visibility = "visible"
+	for(var j = 0;j<l;j++)
+		{	
+		document.getElementById('stugenfil'+j).style.visibility = "visible"
+		}
+}
+else
+{
+	document.getElementById('stugenfil').style.visibility = "hidden"
+		for(var j = 0;j<l;j++)
+		{	
+		document.getElementById('stugenfil'+j).style.visibility = "hidden"
+		}
+}
+}
+
+
+if(myid == 3)
+{
+if(val == 'Yes')
+{
+	document.getElementById('classfil').style.visibility = "visible"
+	for(var j = 0;j<l;j++)
+		{	
+		document.getElementById('classfil'+j).style.visibility = "visible"
+		}
+}
+else
+{
+	document.getElementById('classfil').style.visibility = "hidden"
+		for(var j = 0;j<l;j++)
+		{	
+		document.getElementById('classfil'+j).style.visibility = "hidden"
+		}
+}
+}
+
+if(myid == 4)
+{
+if(val == 'Yes')
+{
+	document.getElementById('sectionfil').style.visibility = "visible"
+	for(var j = 0;j<l;j++)
+		{	
+		document.getElementById('sectionfil'+j).style.visibility = "visible"
+		}
+}
+else
+{
+	document.getElementById('sectionfil').style.visibility = "hidden"
+		for(var j = 0;j<l;j++)
+		{	
+		document.getElementById('sectionfil'+j).style.visibility = "hidden"
+		}
+}
+}
+
+
+if(myid == 5)
+{
+if(val == 'Yes')
+{
+	document.getElementById('subfil').style.visibility = "visible"
+	for(var j = 0;j<l;j++)
+		{	
+		document.getElementById('subfil'+j).style.visibility = "visible"
+		}
+}
+else
+{
+	document.getElementById('subfil').style.visibility = "hidden"
+		for(var j = 0;j<l;j++)
+		{	
+		document.getElementById('subfil'+j).style.visibility = "hidden"
+		}
+}
+}
+
+if(myid == 6)
+{
+if(val == 'Yes')
+{
+	document.getElementById('proffil').style.visibility = "visible"
+	for(var j = 0;j<l;j++)
+		{	
+		document.getElementById('proffil'+j).style.visibility = "visible"
+		}
+}
+else
+{
+	document.getElementById('proffil').style.visibility = "hidden"
+		for(var j = 0;j<l;j++)
+		{	
+		document.getElementById('proffil'+j).style.visibility = "hidden"
+		}
+}
+}
+
+if(myid == 8)
+{
+if(val == 'Yes')
+{
+	document.getElementById('profgenfil').style.visibility = "visible"
+	for(var j = 0;j<l;j++)
+		{	
+		document.getElementById('profgenfil'+j).style.visibility = "visible"
+		}
+}
+else
+{
+	document.getElementById('profgenfil').style.visibility = "hidden"
+		for(var j = 0;j<l;j++)
+		{	
+		document.getElementById('profgenfil'+j).style.visibility = "hidden"
+		}
+}
+}
+
+
+if(myid == 9)
+{
+if(val == 'Yes')
+{
+	document.getElementById('scorefil').style.visibility = "visible"
+	for(var j = 0;j<l;j++)
+		{	
+		document.getElementById('scorefil'+j).style.visibility = "visible"
+		}
+}
+else
+{
+	document.getElementById('scorefil').style.visibility = "hidden"
+		for(var j = 0;j<l;j++)
+		{	
+		document.getElementById('scorefil'+j).style.visibility = "hidden"
+		}
+}
+}
+}
+
+function myfunc()
+{
+var selws = document.getElementById('sel_ws').value
+var selsamp = document.getElementById('sel_samp').value
+var selmea = document.getElementById('sel_mea').value
+
+var stud = document.getElementById('stud').value
+if (stud != '')
+	document.getElementById('1').value = stud
+else
+	document.getElementById('1').value = 'Yes'
+var cls = document.getElementById('cls').value
+if (cls != '')
+	document.getElementById('3').value = cls
+else
+	document.getElementById('3').value = 'Yes'
+var perc = document.getElementById('perc').value
+var sec = document.getElementById('sec').value
+if (sec != '')
+	document.getElementById('4').value = sec
+else
+	document.getElementById('4').value = 'Yes'
+var sub = document.getElementById('sub').value
+if (sub != '')
+	document.getElementById('5').value = sub
+else
+	document.getElementById('5').value = 'Yes'
+var prof = document.getElementById('prof').value
+if (prof != '')
+	document.getElementById('6').value = prof
+else
+	document.getElementById('6').value = 'Yes'
+var stugen = document.getElementById('studgen').value
+if (stugen != '')
+	document.getElementById('7').value = stugen
+else
+	document.getElementById('7').value = 'Yes'
+var profgen = document.getElementById('profgen').value
+if (profgen != '')
+	document.getElementById('8').value = profgen
+else
+	document.getElementById('8').value = 'Yes'
+var income = document.getElementById('income').value
+if (income != '')
+	document.getElementById('9').value = income
+else
+	document.getElementById('9').value = 'Yes'
+
+if(selmea != '')
+	document.getElementById('meaval').value = selmea
+else
+	document.getElementById('meaval').value = 'Average'
+if(selsamp != '')
+	document.getElementById('sampval').value = selsamp
+else
+	document.getElementById('sampval').value = 'Board'
+var sel_ws = document.getElementById('wsval')
+var ele = document.getElementById('ws')
+var val = ele.value
+var arr  = val.split(',')
+var l = arr.length
+for(var j = 0;j<l-1;j++)
+{
+var opt = document.createElement('option')
+opt.text = arr[j]
+if(arr[j] == selws)
+{
+opt.selected = true
+}
+sel_ws.add(opt)
+}
+
+}
+
+
+
+function fetchdata()
+{
+
+var sel_ws = document.getElementById('wsval')
+var sel_samp = document.getElementById('sampval')
+var sel_mea = document.getElementById('meaval')
+var ws = sel_ws.options[sel_ws.selectedIndex].text
+var samp = sel_samp.options[sel_samp.selectedIndex].text
+var mea = sel_mea.options[sel_mea.selectedIndex].text
+var sel_ws_q = document.getElementById('sel_ws')
+var sel_samp_q = document.getElementById('sel_samp')
+var sel_mea_q = document.getElementById('sel_mea')
+sel_ws_q.value = ws
+sel_samp_q.value = samp
+sel_mea_q.value = mea
+var submit = document.getElementById('submit')
+submit.click()
+
+}
+
+
+
+
+
+
+
+
+
+
+
+</script>
+</body>
+</html>

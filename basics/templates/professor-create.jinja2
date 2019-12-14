@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<meta name="description" content="Markup is a scientific method, based on modern analytics techniques, to measure students' knowledge. It will help in identifying where a student stands, and where he / she can improve.">
+	<meta name="author" content="Mark">
+	<link rel="icon" href={{request.static_url('basics:static/icons/markup.ico')}}>
+
+	<title>Create Mode | Professor Dashboard | MithSi | Markup</title>
+
+	<link href={{request.static_url('basics:static/css/bootstrap.min.css')}} rel="stylesheet">
+	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+	<link href={{request.static_url('basics:static/css/main.css')}} rel="stylesheet">
+</head>
+
+<body onload="myfunc()">
+	<nav class="container navbar navbar-light bg-none shadow-sm w-100 z-index-5">
+		<div class=" px-5 mx-auto">
+			<a href="#home">
+				<div class="markup-square mx-auto"></div>
+			</a>
+			<ul class="nav nav-primary justify-content-center">
+				<li class="nav-item">
+					<a class="nav-link" href="#MithSi">MithSi</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="/logout">Log Out</a>
+				</li>
+			</ul>
+		</div>
+	</nav>
+<div>
+<form method="post" action="professor-create" onkeypress="return event.keyCode != 13;">
+	<nav class="container navbar navbar-light bg-none shadow-sm w-100 z-index-3">
+		<div class=" px-5 mx-auto">
+			<nav class="nav nav-secondary justify-content-center">
+				<a class="nav-link" href="/professor-chapters">
+					<span class="d-sm-none" title="Chapters">Ch</span>
+					<span class="d-none d-sm-block">Chapters</span>
+				</a>
+				<a class="nav-link" href="/professor-questions">
+					<span class="d-sm-none" title="Questions">Qu</span>
+					<span class="d-none d-sm-block">Questions</span>
+				</a>
+				<a class="nav-link active" href="professor-create">
+					<span class="d-sm-none" title="Create">Cr</span>
+					<span class="d-none d-sm-block">Create</span>
+				</a>
+				<a class="nav-link" href="/professor-drive">
+					<span class="d-sm-none" title="Drive">Dr</span>
+					<span class="d-none d-sm-block">Drive</span>
+				</a>
+				<a class="nav-link" href="/professor-update">
+					<span class="d-sm-none" title="Update">Up</span>
+					<span class="d-none d-sm-block">Update</span>
+				</a>
+			</nav>
+		</div>
+	</nav>
+	<h6 style="text-align:center;color:red">{{err}}</h6>
+	<form action="/professor-create" method="post>
+
+	<div class="container shadow-sm z-index-1">
+		<div class="row" ng-app="ngCreateQuestionJax">
+			<!-- #Panel 1: Backbone of the Question Paper -->
+			<div class="col-lg-2 bg-none px-3 pt-4 pb-5 border border-left-0 border-right-0 border-top-0 z-index-0">
+
+				<h5 class="text-center text-secondary mb-4">FRAMEWORK</h5>
+
+				<div class="row mb-2 px-3">
+					<div class="form-group w-100">
+						<label>Select Subject</label>
+						<select class="form-control" name="subject" id='subval' onchange="fetchdata()">
+						</select>
+					</div>
+				</div>
+				<div class="row mb-2 px-3">
+					<div class="form-group w-100">
+						<label>Select Class</label>
+						<select class="form-control" id='classval'  onchange="fetchdata()">
+						</select>
+					</div>
+				</div>
+				<div class="row mb-2 px-3">
+					<div class="form-group w-100">
+						<label>Select Section</label>
+						<select class="form-control"  id='secval' onchange="fetchdata()">
+						</select>
+					</div>
+				</div>
+				<!--hr class="pb-2 px-3"/>
+				<div class="row mb-2 px-3">
+					<div class="form-group w-100">
+						<label>Name of the Subject</label>
+						<input class="form-control"  required placeholder="Mathematics" name='subname' id="subname" ng-model="subjectName" onchange="fetchsc()" >
+					</div>
+				</div>
+
+				<div class="row mb-2 px-3">
+					<div class="form-group w-100">
+						<label>Name of the Class</label>
+						<input class="form-control" required placeholder="X" name='classname' id="classname" ng-model="className" onchange="fetchsc()" >
+					</div>
+				</div>
+
+				<div class="row mb-2 px-3">
+					<div class="form-group w-100">
+						<label>Name of the Section</label>
+						<input class="form-control" placeholder="A" required id="secname" name="secname" ng-model="sectionName"  >
+					</div>
+				</div-->
+
+				<hr class="pb-2 px-3"/>
+
+				<div class="row mb-2 px-3">
+					<div class="form-group w-100">
+						<label>Name of the Test/Exam</label>
+						<input class="form-control" placeholder="Monthly" required id="testname" name="testname"  ng-model="testName" >
+					</div>
+				</div>
+
+				<div class="row mb-2 px-3">
+					<div class="form-group w-100">
+						<label>Date of the Test/Exam</label>
+						<input class="form-control" placeholder="dd/mm/yy" required name="testdate"  id="doe" >
+					</div>
+				</div>
+
+				<div class="row mb-2 px-3">
+					<div class="form-group w-100">
+						<label>Max. number of Test/Exam questions</label>
+						<input class="form-control" placeholder="10" id="maxque" required name="maxque" >
+					</div>
+				</div>
+
+				<div class="row mb-2 px-3">
+					<div class="form-group w-100">
+						<label>Test/Exam duration</label>
+						<input class="form-control" placeholder="1.5 Hours" required ng-model="timeAllotted"  name="duration" id="duration" >
+					</div>
+				</div>
+
+				<div class="row mb-2 px-3">
+					<div class="form-group w-100">
+						<label>Number of Sections</label>
+						<input class="form-control" placeholder="10" id="noofsec" required name="noofsec"  onchange='create_sec()' >
+					</div>
+				</div>
+ 				<div id="frame"></div>
+
+				<!--<hr class="pb-2 px-3"/>
+
+				<hr class="pb-2 px-3"/>
+
+				<span class="row px-3 text-secondary w-100">
+					Note: All input boxes support LaTex equations.
+				</span> -->
+
+			</div>
+			<!-- #Panel 2: The Question Paper, with Questions -->
+<div class="col-lg-5 bg-white px-3 pt-4 border border-left-0 border-right-0 border-top-0" id="container">
+				<h5 class="text-center text-secondary mb-4">QUESTIONS</h5>
+			</div>
+			<!--Panel 3: Preview Panel-->
+
+			<div class="col-lg-5 bg-none px-3 pt-4 pb-5 border border-left-0 border-right-0 border-top-0">
+				<h5 class="text-center text-secondary mb-4">PREVIEW</h5>
+				<div id="ppqp">
+				</div>
+			</div>
+		</div>
+		<div class="row">
+				<button class="btn btn-outline-primary ml-1 mr-3" onclick="saveit()">submit</button>
+		</div>
+	</div>
+</div> 
+</div>
+<input type="text" name ="sel_class" id="sel_class2"  >
+<input type="text" name="sel_sec" id="sel_sec2" >
+<input type="text" name="sel_sub" id="sel_sub2"  >
+<input type="submit" id="savedata" name="savedata" style="display:none">
+</form>
+
+	<footer class="container px-3 py-3">
+		<ul class="list-inline">
+			<li class="list-inline-item mr-3"><a href="/index-get-started">About</a></li>
+			<li class="list-inline-item mr-3"><a href="/index-get-started">How it works</a></li>
+			<li class="list-inline-item mr-3"><a href="/index-get-started">Pricing</a></li>
+			<li class="list-inline-item mr-3"><a href="/index-get-started">Blog</a></li>
+			<li class="list-inline-item mr-3"><a href="/index-get-started">Terms</a></li>
+			<li class="list-inline-item mr-3"><a href="/index-get-started">Privacy</a></li>
+			<li class="list-inline-item mr-3"><a href="/index-get-started">Disclosures</a></li>
+			<li class="list-inline-item mr-3"><a href="/index-get-started">Contact</a></li>
+		</ul>
+		<p class="text-secondary">{{res}}Markup is a scientific method, based on modern analytics techniques, to measure students' knowledge. It will help in identifying where a student stands, and where he / she can improve.</p>
+		<p class="text-secondary">&copy; Markup. All rights reserved.</p>
+	</footer>
+
+
+<input type="text"  id="cls" value={{classes}}>
+<input type="text"  id="sec" value={{sections}}>
+<input type="text" id="sub"  value={{subjects}} >
+<form method="post" action="/professor-create">
+<input type="text" name ="sel_class" id="sel_class" value={{sel_class}} >
+<input type="text" name="sel_sec" id="sel_sec" value={{sel_sec}} >
+<input type="text" name="sel_sub" id="sel_sub" value={{sel_sub}} >
+<input type="submit" style="display:none" id="submit" name="save" >
+<input type="hidden" id="subchap" value={{res}}>
+<!--
+<form action="/professor-create" method="post">
+ {%for i in names %}
+<input type="hidden" name="clsname" value="{{i[0]}}" id="clsname">
+<input type="hidden" name="secname" value="{{i[1]}}" id="secname">
+<input type="hidden" value="{{i[2]}}" name="subname" id="subname">
+{%endfor%}
+<input type="submit" id="savedata" name='save' style="display:none">
+</form>
+-->
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.0-beta.19/angular.min.js"></script>
+	<script src="https://colcarroll.github.io/ngMathJax/ng-mathjax.js"></script>
+	<script>
+		angular.module("ngCreateQuestionJax", ["ngJaxBind"]);
+	</script>
+	<script type="text/x-mathjax-config">
+		MathJax.Hub.Config({
+			tex2jax: {
+				 inlineMath: [['$','$'], ['\\(','\\)']],
+					processEscapes: true }
+		});
+	</script>
+	<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"> </script>
+
+
+	<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+	<script src={{request.static_url('basics:static/js/bootstrap.min.js')}}></script>
+
+	<link rel="stylesheet" href="https://drvic10k.github.io/bootstrap-sortable/Contents/bootstrap-sortable.css" />
+	<script src="https://drvic10k.github.io/bootstrap-sortable/Scripts/bootstrap-sortable.js"></script>
+
+	<link href="https://fonts.googleapis.com/css?family=Roboto+Condensed" rel="stylesheet"> 
+<script>
+    if ( window.history.replaceState ) {
+        window.history.replaceState( null, null, window.location.href );
+    }
+/*function savedata()
+
+{
+var sub = document.getElementById('subname').value
+var cls = document.getElementById('classname').value
+var sec = document.getElementById('secname').value
+var tst = document.getElementById('testname').value
+var doe = document.getElementById('doe').value
+var dur = document.getElementById('duration').value
+var maxq = document.getElementById('maxque').value
+var nos = document.getElementById('noofsec').value
+document.getElementById('subnm').value = sub
+document.getElementById('clsnm').value = cls
+document.getElementById('scnm').value = sec
+document.getElementById('tstnm').valuquessubmite = tst
+document.getElementById('tstdt').value = doe
+document.getElementById('dur').value = dur
+document.getElementById('que').value = maxq
+document.getElementById('noos').value = nos
+document.getElementById('savedata').click()
+}*/
+
+function saveit()
+{
+document.getElementById('savedata').click();
+}
+
+function create_sec()
+{
+var no_of_sec = document.getElementById('noofsec').value;
+var container = document.getElementById('container');
+var frame = document.getElementById('frame');
+while(frame.firstChild)
+{
+frame.removeChild(frame.firstChild)
+}
+
+while(container.firstChild)
+{
+container.removeChild(container.firstChild)
+}
+for (var i = 0;i<no_of_sec;i++)
+{
+var secprev = document.createElement('div')
+secprev.setAttribute("id","secprev"+(i+1))
+document.getElementById('ppqp').appendChild(secprev)
+var noofques = document.createElement('div')
+var f = document.createElement('div')
+f.setAttribute("class","form-control,w-100")
+var l = document.createElement('label')
+l.innerHTML = " Number of questions in section : " + (i +1);
+var inp = document.createElement('input')
+inp.setAttribute("class","form-control")
+inp.setAttribute("name","questions"+(i+1))
+inp.setAttribute("id","questions"+(i+1))
+inp.setAttribute("onchange","create_ques(this.id);")
+f.appendChild(l)
+f.appendChild(inp)
+noofques.appendChild(f)
+frame.appendChild(noofques)
+
+var typeofques = document.createElement('div')
+var f = document.createElement('div')
+f.setAttribute("class","form-control,w-100")
+var l = document.createElement('label')
+l.innerHTML = " Type of questions in section : " + (i +1);
+var sel = document.createElement('select')
+sel.setAttribute("name","questype")
+sel.setAttribute("id","questype")
+var opt1 = document.createElement('option')
+var opt2 = document.createElement('option')
+var opt3 = document.createElement('option')
+var opt4 = document.createElement('option')
+var opt5 = document.createElement('option')
+sel.setAttribute("class","form-control")
+opt1.text = "Choose the correct answer"
+opt2.text = "Fill in the blanks"
+opt3.text = "True/False"
+opt4.text = "Brief answers"
+opt5.text = "Descriptive answers"
+sel.add(opt1)
+sel.add(opt2)
+sel.add(opt3)
+sel.add(opt4)
+sel.add(opt5)
+f.appendChild(l)
+f.appendChild(sel)
+typeofques.appendChild(f)
+frame.appendChild(typeofques)
+
+var marksofques = document.createElement('div')
+var f = document.createElement('div')
+f.setAttribute("class","form-control,w-100")
+var l2 = document.createElement('label')
+l2.innerHTML = " Max marks of questions in section : " + (i +1);
+var inp = document.createElement('input')
+inp.setAttribute("class","form-control")
+inp.setAttribute("name","maxmark"+(i+1))
+inp.setAttribute("id","maxmark"+(i+1))
+f.appendChild(l2)
+f.appendChild(inp)
+marksofques.appendChild(f)
+frame.appendChild(marksofques)
+
+
+var quesdesc = document.createElement('div')
+var f = document.createElement('div')
+f.setAttribute("class","form-group")
+f.setAttribute("id","cont"+(i+1))
+var l = document.createElement('label')
+l.innerHTML = " Enter description for section : " + (i +1);
+l.setAttribute("id","desclabel"+(i+1))
+var textarea = document.createElement('textarea')
+textarea.setAttribute("class","form-control")
+textarea.setAttribute("rows",2)
+textarea.setAttribute("ng-model","section1")
+textarea.setAttribute("name","secdesc"+(i+1))
+textarea.setAttribute("id","secdesc"+(i+1))
+f.appendChild(l)
+f.appendChild(textarea)
+quesdesc.appendChild(f)
+container.appendChild(quesdesc)
+}
+}
+function create_ques(getid)
+{
+var lastChar = getid[getid.length -1];
+alert(lastChar);
+var q = document.getElementById(getid)
+var no_of_ques = q.value
+var s = document.getElementById("cont"+lastChar)
+var secpre = document.getElementById("secprev"+lastChar)
+while(s.firstChild)
+{
+s.removeChild(s.firstChild)
+}
+while(secpre.firstChild)
+{
+secpre.removeChild(secpre.firstChild)
+}
+var l = document.createElement('label')
+l.innerHTML = " Enter description for section : " + lastChar;
+l.setAttribute("id","desclabel"+lastChar)
+var textarea = document.createElement('textarea')
+textarea.setAttribute("class","form-control")
+textarea.setAttribute("rows",2)
+textarea.setAttribute("name","secdesc"+lastChar)
+textarea.setAttribute("id","secdesc"+lastChar)
+s.appendChild(l)
+s.appendChild(textarea)
+var showsecdesc = document.createElement('h5')
+showsecdesc.setAttribute("id","showsecdesc"+lastChar)
+secpre.appendChild(showsecdesc)
+textarea.onkeyup = textarea.onkeypress = function(){
+          document.getElementById('quesdesc'+lastChar+(j+1)).innerHTML = this.value;
+}
+var textcontent = document.getElementById('secdesc'+lastChar);
+textcontent.onkeyup = textcontent.onkeypress = function(){
+          document.getElementById('showsecdesc'+lastChar).innerHTML = this.value;
+}
+for(var j =0;j<no_of_ques;j++)
+{
+var lastChar = getid[getid.length -1];
+var s = document.getElementById("cont"+lastChar)
+var secpre = document.getElementById("secprev"+lastChar)
+var d = document.createElement('div')
+var l = document.createElement('label')
+l.innerHTML = " Question : " + (j +1);
+var textarea = document.createElement('textarea')
+textarea.setAttribute("class","form-control")
+textarea.setAttribute("rows",2)
+textarea.setAttribute("name","ques"+(lastChar+(j+1)))
+textarea.setAttribute("id","ques"+(lastChar+(j+1)))
+textarea.setAttribute("onkeyup","displayit(this.id,this.value)");
+textarea.setAttribute("onkeypress","displayit(this.id,this.value)");
+alert("ques"+(lastChar+(j+1)));
+var sel = document.createElement('select')
+sel.setAttribute("id","linksc"+(lastChar+(j+1)))
+sel.setAttribute("name","linksc"+(lastChar+(j+1)))
+var mrk = document.createElement('input')
+mrk.setAttribute("id","marks"+(lastChar+(j+1)))
+mrk.setAttribute("class","form-control")
+mrk.setAttribute("name","marks"+(lastChar+(j+1)))
+mrk.setAttribute("placeholder","Enter mark:")
+var sc = document.getElementById('subchap').value
+sc = sc.substring(0,sc.length-1);
+sc = sc.split(',')
+var  n = sc.length
+for (var  k = 0;k<n;k++)
+{
+var opt = document.createElement('option')
+opt.text = sc[k]
+sel.add(opt)
+}
+var p = document.createElement('h6')
+p.setAttribute("id","showans"+(lastChar+(j+1)))
+alert("showans"+(lastChar+(j+1)));
+p.innerHTML = "hello";
+secpre.appendChild(p);
+alert(document.getElementById("showans"+(lastChar+(j+1))))
+d.appendChild(l)
+d.appendChild(textarea)
+d.appendChild(sel)
+d.appendChild(mrk)
+s.appendChild(d)
+}
+}
+
+function displayit(getid,val)
+{
+	var lastChar = getid[getid.length -1];
+	var j = getid[getid.length -2];
+	document.getElementById("showans"+(j+lastChar)).innerHTML = val;
+}
+
+function myfunc()
+{
+
+
+selclass = document.getElementById('sel_class').value
+selsec = document.getElementById('sel_sec').value
+selsub = document.getElementById('sel_sub').value
+var sel_class = document.getElementById('classval')
+var ele = document.getElementById('cls')
+var val = ele.value
+var arr  = val.split(',')
+var l = arr.length
+for(var j = 0;j<l-1;j++)
+{
+var opt = document.createElement('option')
+opt.text = arr[j]
+if(arr[j] == selclass)
+{
+opt.selected = true
+}
+sel_class.add(opt)
+}
+
+var sel_sec = document.getElementById('secval')
+var ele = document.getElementById('sec')
+var val = ele.value
+var arr  = val.split(',')
+var l = arr.length
+for(var j = 0;j<l-1;j++)
+{
+var opt = document.createElement('option')
+opt.text = arr[j]
+if(arr[j] == selsec)
+{
+opt.selected = true
+}
+sel_sec.add(opt)
+}
+var sel_sub = document.getElementById('subval')
+var ele = document.getElementById('sub')
+var val = ele.value
+var arr  = val.split(',')
+var l = arr.length
+for(var j = 0;j<l-1;j++)
+{
+var opt = document.createElement('option')
+opt.text = arr[j]
+if(arr[j] == selsub)
+{
+opt.selected = true
+}
+sel_sub.add(opt)
+}
+}
+
+
+
+function fetchdata()
+{
+var sel_class = document.getElementById('classval')
+var sel_sec = document.getElementById('secval')
+var sel_sub = document.getElementById('subval')
+var cls = sel_class.options[sel_class.selectedIndex].text
+var sec = sel_sec.options[sel_sec.selectedIndex].text
+var sub = sel_sub.options[sel_sub.selectedIndex].text
+alert(sub)
+var sel_class_q = document.getElementById('sel_class')
+var sel_sec_q = document.getElementById('sel_sec')
+var sel_sub_q = document.getElementById('sel_sub')
+sel_class_q.value = cls
+sel_sec_q.value = sec
+sel_sub_q.value = sub
+var sel_class_q1 = document.getElementById('sel_class2')
+var sel_sec_q1 = document.getElementById('sel_sec2')
+var sel_sub_q1 = document.getElementById('sel_sub2')
+sel_class_q1.value = cls
+sel_sec_q1.value = sec
+sel_sub_q1.value = sub
+var submit = document.getElementById('submit')
+submit.click()
+}
+
+
+</script>
+</body>
+</html>

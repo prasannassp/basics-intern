@@ -1,0 +1,3 @@
+[run]
+source = basics
+omit = basics/test*

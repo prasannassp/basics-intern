@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<meta name="description" content="Markup is a scientific method, based on modern analytics techniques, to measure students' knowledge. It will help in identifying where a student stands, and where he / she can improve.">
+	<meta name="author" content="Mark">
+	<link rel="icon" href={{request.static_url('basics:static/icons/markup.ico')}} >
+
+	<title>Link Mode | Admin Dashboard | MithSi |  Markup</title>
+
+	<link href={{request.static_url('basics:static/css/bootstrap.min.css')}} rel="stylesheet">
+	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+	<link href={{request.static_url('basics:static/css/main.css')}} rel="stylesheet">
+</head>
+
+<body onload="myfunc()">
+	<nav class="container navbar navbar-light bg-none shadow-sm w-100 z-index-5">
+		<div class=" px-5 mx-auto">
+			<a href="#home">
+				<div class="markup-square mx-auto"></div>
+			</a>
+			<ul class="nav nav-primary justify-content-center">
+				<li class="nav-item">
+					<a class="nav-link" href="#MithSi">MithSi</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="/logout">Log Out</a>
+				</li>
+			</ul>
+		</div>
+	</nav>
+
+	<nav class="container navbar navbar-light bg-none shadow-sm w-100 z-index-3">
+		<div class=" px-5 mx-auto">
+			<nav class="nav nav-secondary justify-content-center">
+				<a class="nav-link" href='/admin-students'>
+					<span class="d-sm-none" title="Students">St</span>
+					<span class="d-none d-sm-block">Students</span>
+				</a>
+				<a class="nav-link" href="/admin-professors">
+					<span class="d-sm-none" title="Professors">Pr</span>
+					<span class="d-none d-sm-block">Professors</span>
+				</a>
+				<a class="nav-link active" href="/admin-link">
+					<span class="d-sm-none" title="Link">Li</span>
+					<span class="d-none d-sm-block">Link</span>
+				</a>
+				<a class="nav-link" href="/admin-snapshot">
+					<span class="d-sm-none" title="Snapshot">Sn</span>
+					<span class="d-none d-sm-block">Snapshot</span>
+				</a>
+				<a class="nav-link " href="/admin-syllabus">
+					<span class="d-sm-none" title="Syllabus">Sy</span>
+					<span class="d-none d-sm-block">Syllabus</span>
+				</a>
+			</nav>
+		</div>
+	</nav>
+<h2>{{err}}</h2>
+	<div class="container shadow-sm z-index-1">
+		<div class="row">
+			<div class="col-lg-3 px-3 py-4 border border-left-0 border-right-0 border-top-0 bg-none">
+					<div class="form-group">
+						<label>Class</label>
+						<select class="form-control" id='classval' onchange="fetchdata()">
+							<option value="All" selected>All</option>
+						</select>
+					</div>
+					<div class="form-group">
+						<label>Section</label>
+						<select class="form-control" id='secval' onchange="fetchdata()">
+							<option value="All" selected>All</option>
+						</select>
+					</div>
+					<div class="form-group">
+						<label>Subject</label>
+						<select class="form-control" id='subval' onchange="fetchdata()">
+							<option value="All" selected>All</option>
+						</select>
+					</div>
+			</div>
+			<div class="col-lg-9 bg-white px-3 py-3 pt-4  border border-left-0 border-right-0 border-top-0 z-index-0">
+				<h2 class="text-center" id="class_head"></h2>
+				<h5 class="text-center text-secondary" id="sec_head"></h5>
+				<h5 class="text-center text-secondary mb-4" id="sub_head"> </h5>
+				<div class="row mt-4 px-3">
+					<div class="w-100 table-scroll-x">
+						<table class="table table-md table-hover sortable" id ="tab">
+							<thead>
+								<tr>
+									<th scope="col">Class</th>
+									<th scope="col">Section</th>
+									<th scope="col">Subject</th>
+									<th scope="col">Professor</th>
+								</tr>
+							</thead>
+							<tbody id="tbody">
+									{%for i,k  in iter%}
+								<tr>
+								<td scope="col" id="clsnametd">
+									{{i[0]}}
+								</td>
+								<td scope="col" id="secnametd">
+									{{i[1]}}
+								</td>
+								<td scope="col" id="subnametd">
+									{{i[2]}}
+								</td>
+								<td>
+								<select name="profname" id={{k}} >
+								{%for j in i[3:] %}
+								<option>{{j}}</option>
+								{%endfor%}
+								</select>								
+								</td>
+								<td>
+								</tr>	
+								{%endfor%}
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col bg-white px-3 py-3 text-right z-index-0">
+				<button class="btn btn-outline-primary mx-3" onclick="savedata()">Submit</button>			
+</div>
+		</div>
+	</div>
+	<footer class="container px-3 py-3">
+		<ul class="list-inline">
+			<li class="list-inline-item mr-3"><a href="/index-get-started">About</a></li>
+			<li class="list-inline-item mr-3"><a href="/index-get-started">How it works</a></li>
+			<li class="list-inline-item mr-3"><a href="/index-get-started">Pricing</a></li>
+			<li class="list-inline-item mr-3"><a href="/index-get-started">Blog</a></li>
+			<li class="list-inline-item mr-3"><a href="/index-get-started">Terms</a></li>
+			<li class="list-inline-item mr-3"><a href="/index-get-started">Privacy</a></li>
+			<li class="list-inline-item mr-3"><a href="/index-get-started">Disclosures</a></li>
+			<li class="list-inline-item mr-3"><a href="/index-get-started">Contact</a></li>
+		</ul>
+		<p class="text-secondary">Markup is a scientific method, based on modern analytics techniques, to measure students' knowledge. It will help in identifying where a student stands, and where he / she can improve.</p>
+		<p class="text-secondary">&copy; Markup. All rights reserved.</p>
+	</footer>
+
+	<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+	<script src={{request.static_url('basics:static/js/bootstrap.min.js')}}></script>
+
+	<link rel="stylesheet" href="https://drvic10k.github.io/bootstrap-sortable/Contents/bootstrap-sortable.css" />
+	<script src="https://drvic10k.github.io/bootstrap-sortable/Scripts/bootstrap-sortable.js"></script>
+
+	<link href="https://fonts.googleapis.com/css?family=Roboto+Condensed" rel="stylesheet">
+<input type="hidden" value={{classes}} id="cls" >
+<input type="hidden" value={{sections}} id="sec" >
+<input type="hidden" value={{subjects}} id="sub" >
+<form method="post" action="/admin-link">
+<input type="hidden" name ="sel_class" id="sel_class" value={{sel_class}} >
+<input type="hidden" name="sel_sec" id="sel_sec" value ={{sel_sec}} >
+<input type="hidden" name="sel_sub" id="sel_sub" value={{sel_sub}} >
+<input type="submit" style="display:none" id="submit" name="query" >
+</form>
+<form action="/admin-link" method="post">
+<input type="hidden" id="itms" name="names">
+<input type="submit" style="display:none" id="savedata" name='save'>
+</form>
+
+
+
+<script>
+
+function myfunc()
+{
+
+selclass = document.getElementById('sel_class').value
+selsec = document.getElementById('sel_sec').value
+selsub = document.getElementById('sel_sub').value
+var sel_class = document.getElementById('classval')
+var ele = document.getElementById('cls')
+var val = ele.value
+var arr  = val.split(',')
+var l = arr.length
+for(var j = 0;j<l-1;j++)
+{
+var opt = document.createElement('option')
+opt.text = arr[j]
+if(arr[j] == selclass)
+{
+opt.selected = true
+}
+sel_class.add(opt)
+}
+
+var sel_sec = document.getElementById('secval')
+var ele = document.getElementById('sec')
+var val = ele.value
+var arr  = val.split(',')
+var l = arr.length
+for(var j = 0;j<l-1;j++)
+{
+var opt = document.createElement('option')
+opt.text = arr[j]
+if(arr[j] == selsec)
+{
+opt.selected = true
+}
+sel_sec.add(opt)
+}
+var sel_sub = document.getElementById('subval')
+var ele = document.getElementById('sub')
+var val = ele.value
+var arr  = val.split(',')
+var l = arr.length
+for(var j = 0;j<l-1;j++)
+{
+var opt = document.createElement('option')
+opt.text = arr[j]
+if(arr[j] == selsub)
+{
+opt.selected = true
+}
+sel_sub.add(opt)
+}
+}
+
+function savedata()
+{
+var items = ''
+var myTab = document.getElementById('tab')
+var col = myTab.rows[0].cells.length 
+var row = myTab.rows.length
+var table, tr, td,l;
+var ans  = ''
+        for (var i = 1; i <row; i++) 
+		{ 
+            for (var j = 0; j < col; j++) 
+			{ 
+				if (j == 3)
+				{
+
+        			var e = document.getElementById(i -1);
+					items += e.value + ','
+				
+				}
+				else
+				{
+				 	   items +=  myTab.rows[i].cells.item(j).innerHTML + ','
+				}
+        	}
+    	} 
+items = items.replace(/\t/g, '')
+items = items.split(',')
+var itms = document.getElementById('itms')
+itms.value = items
+var save = document.getElementById('savedata')
+save.click()
+}
+
+
+function fetchdata()
+{
+var sel_class = document.getElementById('classval')
+var sel_sec = document.getElementById('secval')
+var sel_sub = document.getElementById('subval')
+var cls = sel_class.options[sel_class.selectedIndex].text
+var sec = sel_sec.options[sel_sec.selectedIndex].text
+var sub = sel_sub.options[sel_sub.selectedIndex].text
+var sel_class_q = document.getElementById('sel_class')
+var sel_sec_q = document.getElementById('sel_sec')
+var sel_sub_q = document.getElementById('sel_sub')
+sel_class_q.value = cls
+sel_sec_q.value = sec
+sel_sub_q.value = sub
+document.getElementById('tbody').innerHTML = ''
+var submit = document.getElementById('submit')
+submit.click()
+}
+
+/*var tr = document.createElement('tr')
+var td_class = document.createElement('td')
+td_class.setAttribute("class","align-middle")
+td_class.innerHTML = cls
+var td_sec = document.createElement('td')
+td_sec.setAttribute("class","align-middle")
+td_sec.innerHTML = sec
+var td_sub = document.createElement('td')
+td_sub.setAttribute("class","align-middle")
+td_sub.innerHTML = sub
+var td_opt = document.createElement('td')
+td_class.setAttribute("class","align-middle,form-group")
+var opt_sel = document.createElement('select')
+opt_sel.setAttribute("class","form-control")
+td_opt.appendChild(opt_sel)
+var tbody = document.getElementById('tbody')
+while(tbody.firstChild)
+{
+tbody.removeChild(tbody.firstChild)
+}
+tr.appendChild(td_class)
+tr.appendChild(td_sec)
+tr.appendChild(td_sub)
+tbody.appendChild(tr) */
+
+</script>
+</body>
+</html>

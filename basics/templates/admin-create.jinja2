@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<meta name="description" content="Markup is a scientific method, based on modern analytics techniques, to measure students' knowledge. It will help in identifying where a student stands, and where he / she can improve.">
+	<meta name="author" content="Mark">
+	<link rel="icon" href={{request.static_url('basics:static/icons/markup.ico')}}>
+
+	<title>Sign In | Markup</title>
+
+	<link href={{request.static_url('basics:static/css/bootstrap.min.css')}} rel="stylesheet">
+	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+	<link href={{request.static_url('basics:static/css/main.css')}} rel="stylesheet">
+</head>
+
+<body>
+	<nav class="container navbar navbar-light bg-none shadow-sm w-100 z-index-5">
+		<div class=" px-5 mx-auto">
+			<a href="#home">
+				<div class="markup-square mx-auto"></div>
+			</a>
+			<ul class="nav nav-primary justify-content-center mt-4 my-2">
+				<li class="nav-item">
+					<a class="nav-link btn btn-outline-primary" href="/index-get-started">Get Started</a>
+				</li>
+			</ul>
+		</div>
+	</nav>
+
+	<div class="container shadow-sm z-index-1">
+		<div class="row">
+			<div class="col-md bg-white">
+			</div>
+			<div class="col-md px-3 py-4 text-center bg-white">
+
+		<form class="py-5 form-signin mx-auto text-center" action='/admin-create' method='post'>
+	        <h2 class="mb-3 font-weight-normal">Register</h2>
+	        <p style="color:red">{{exist_err}}</p>
+		<input type="text" id="inputSchool" class="form-control my-1" name='schoolname' placeholder="School" required autofocus>
+	        <input type="email" name='username' id="inputEmail" name='username' class="form-control my-1" placeholder="Email address" required>
+	        <input type="password" name='password' id="inputPassword" name='password' class="form-control my-1" placeholder="Password" required>
+	        <!-- <div class="checkbox mt-3">
+	          <label class="text-secondary">
+	            <input type="checkbox" value="remember-me"> Remember me
+	          </label>
+	        </div>
+	        <a href="#">Forgot Password?</a> -->
+	        <input class="btn btn-outline-primary btn-block mt-3 mb-5" type="submit" name='submit'value="Register" >
+	      </form>
+
+	      <section class="pb-5 text-center">
+					<h6 class="text-secondary">Don't worry if Markup is not available for your school</h6>
+					<h2 class="text-secondary">Would you like to get Markup for your school?</h2>
+	        <a class="btn btn-outline-secondary" href="/admin-create">
+	          Get In Touch
+	        </a>
+	      </section>
+			</div>
+			<div class="col-md bg-white">
+			</div>
+		</div>
+	</div>
+	<footer class="container px-3 py-3">
+		<ul class="list-inline">
+			<li class="list-inline-item mr-3"><a href="/index-get-started">About</a></li>
+			<li class="list-inline-item mr-3"><a href="/index-get-started">How it works</a></li>
+			<li class="list-inline-item mr-3"><a href="/index-get-started">Pricing</a></li>
+			<li class="list-inline-item mr-3"><a href="/index-get-started">Blog</a></li>
+			<li class="list-inline-item mr-3"><a href="/index-get-started">Terms</a></li>
+			<li class="list-inline-item mr-3"><a href="/index-get-started">Privacy</a></li>
+			<li class="list-inline-item mr-3"><a href="/index-get-started">Disclosures</a></li>
+			<li class="list-inline-item mr-3"><a href="/index-get-started">Contact</a></li>
+		</ul>
+		<p class="text-secondary">Markup is a scientific method, based on modern analytics techniques, to measure students' knowledge. It will help in identifying where a student stands, and where he / she can improve.</p>
+		<p class="text-secondary">&copy; Markup. All rights reserved.</p>
+	</footer>
+	<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+	<script src={{request.static_url('basics:static/js/bootstrap.min.js')}}></script>
+
+	<link rel="stylesheet" href="https://drvic10k.github.io/bootstrap-sortable/Contents/bootstrap-sortable.css" />
+	<script src="https://drvic10k.github.io/bootstrap-sortable/Scripts/bootstrap-sortable.js"></script>
+
+	<link href="https://fonts.googleapis.com/css?family=Roboto+Condensed" rel="stylesheet">
+	<script>
+    if ( window.history.replaceState ) {
+        window.history.replaceState( null, null, window.location.href );
+    }
+	</script>
+</body>
+</html>

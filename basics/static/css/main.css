@@ -1,0 +1,144 @@
+body {
+  padding-bottom: 10px;
+  background: #fafafa;
+  font-family: 'Roboto Condensed', sans-serif;
+}
+
+.container {
+  max-width: 90%;
+}
+
+.text-markup-blue {
+  color: #00a3b4;
+}
+
+.text-markup-red {
+  color: #f7005f;
+}
+
+.text-markup-violet {
+  color: #6900c5;
+}
+
+.text-markup-yellow {
+  color: #e3a000;
+}
+
+.bg-markup-blue {
+  background-color: #00a3b4;
+}
+
+.bg-markup-red {
+  background-color: #f7005f;
+}
+
+.bg-markup-violet {
+  background-color: #6900c5;
+}
+
+.bg-markup-yellow {
+  background-color: #e3a000;
+}
+
+footer {
+  font-size: .95rem;
+}
+
+.bg-fafafa {
+  background-color: #fafafa;
+}
+
+.w-95 {
+	width: 95%;
+}
+
+.table-scroll-x {
+	overflow-x: auto;
+}
+
+.markup-square {
+  background: url(../images/markup_square.png) center center;
+  background-repeat: no-repeat;
+  background-size: contain;
+  height: 80px;
+  width: 80px;
+}
+
+.markup-rectangle-index {
+  background: url(../images/markup_rectangle.png) center center;
+  background-repeat: no-repeat;
+  background-size: contain;
+  height: 50px;
+  width: 197px;
+}
+
+.z-index-0 {
+	z-index: 0;
+}
+
+.z-index-1 {
+	z-index: 1;
+}
+
+.z-index-2 {
+	z-index: 2;
+}
+
+.z-index-3 {
+	z-index: 5;
+}
+
+.z-index-4 {
+	z-index: 5;
+}
+
+.z-index-5 {
+	z-index: 5;
+}
+
+.nav-secondary .nav-link {
+  padding: .25rem 0;
+  color: rgba(106, 117, 125, .75);
+  background-color: transparent;
+  border-bottom: .25rem solid transparent;
+}
+
+.nav-secondary .nav-link:hover,
+.nav-secondary .nav-link:focus {
+  border-bottom-color: rgba(87, 97, 104, .5);
+}
+
+.nav-secondary .nav-link + .nav-link {
+  margin-left: 1rem;
+}
+
+.nav-secondary .active {
+  color: rgba(87, 97, 104, 1);
+  border-bottom-color: rgba(87, 97, 104, .5);
+}
+
+@media only screen {
+  .table-question-col {
+    min-width: 70vw;
+  }
+
+  @media only screen and (min-width: 320px) {
+    @media only screen and (min-width: 768px) {
+      .table-question-col {
+        min-width: 33vw;
+      }
+    }
+  }
+}
+
+.list-style-none {
+  list-style: none;
+}
+
+.font-size-110 {
+  font-size: 1.1rem;
+}
+
+.min-width-160px {
+  min-width: 160px;
+}

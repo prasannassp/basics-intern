@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<meta name="description" content="Markup is a scientific method, based on modern analytics techniques, to measure students' knowledge. It will help in identifying where a student stands, and where he / she can improve.">
+	<meta name="author" content="Mark">
+	<link rel="icon" href={{request.static_url('basics:static/icons/markup.ico')}}>
+
+	<title>Drive Mode | Professor Dashboard | MithSi | Markup</title>
+
+	<link href={{request.static_url('basics:static/css/bootstrap.min.css')}} rel="stylesheet">
+	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+	<link href={{request.static_url('basics:static/css/main.css')}} rel="stylesheet">
+</head>
+
+<body onload="myfunc()">
+	<nav class="container navbar navbar-light bg-none shadow-sm w-100 z-index-5">
+		<div class=" px-5 mx-auto">
+			<a href="#home">
+				<div class="markup-square mx-auto"></div>
+			</a>
+			<ul class="nav nav-primary justify-content-center">
+				<li class="nav-item">
+					<a class="nav-link" href="#MithSi">MithSi</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="/logout">Log Out</a>
+				</li>
+			</ul>
+		</div>
+	</nav>
+{% for i in qp %}
+<p>{{i.qno}}</p>
+<p>{{i.testname}}</p>
+<p>{{i.subject}}</p>
+<p>{{i.maxques}}</p>
+<p>{{i.duration}}</p>
+{% endfor %}
+	<nav class="container navbar navbar-light bg-none shadow-sm w-100 z-index-3">
+		<div class=" px-5 mx-auto">
+			<nav class="nav nav-secondary justify-content-center">
+				<a class="nav-link" href="/professor-chapters">
+					<span class="d-sm-none" title="Chapters">Ch</span>
+					<span class="d-none d-sm-block">Chapters</span>
+				</a>
+				<a class="nav-link" href="/professor-questions">
+					<span class="d-sm-none" title="Questions">Qu</span>
+					<span class="d-none d-sm-block">Questions</span>
+				</a>
+				<a class="nav-link" href="/professor-create">
+					<span class="d-sm-none" title="Create">Cr</span>
+					<span class="d-none d-sm-block">Create</span>
+				</a>
+				<a class="nav-link active" href="/professor-drive">
+					<span class="d-sm-none" title="Drive">Dr</span>
+					<span class="d-none d-sm-block">Drive</span>
+				</a>
+				<a class="nav-link" href="/professor-update">
+					<span class="d-sm-none" title="Update">Up</span>
+					<span class="d-none d-sm-block">Update</span>
+				</a>
+			</nav>
+		</div>
+	</nav>
+
+	<div class="container shadow-sm z-index-1">
+		<div class="row">
+			<div class="col-lg-3 px-3 py-4 border border-left-0 border-right-0 border-top-0 bg-none">
+				<form class="mb-4">
+					<div class="form-group">
+						<label>Subject</label>
+						<select class="form-control" id="subval" onchange="fetchdata()">
+							<option selected>All</option>
+							<option></option>
+						</select>
+					</div>
+				</form>
+				<form class="mb-4">
+					<div class="form-group">
+						<label>Class</label>
+						<select class="form-control" id="classval" onchange="fetchdata()">
+							<option selected>All</option>	
+							<option></option>
+						</select>
+					</div>
+				</form>
+			</div>
+
+			<div class="col-lg-9 bg-white px-3 py-3 pt-4  border border-left-0 border-right-0 border-top-0 z-index-0">
+				<h2 class="text-center">Subject: {{sel_sub}}</h2>
+				<h5 class="text-center text-secondary mb-4">CLASS:{{sel_class}}</h5>
+
+				<div class="row px-3 my-3">
+					<input class="form-control form-control-md mb-3" type="text" placeholder="Search for Chapters"/>
+					<div class="w-100 table-scroll-x">
+						<table class="table table-md table-hover sortable">
+							<thead>
+								<tr>
+									<th scope="col">Test/Exam Name</th>
+									<th scope="col">Date</th>
+									<th scope="col">Subject</th>
+									<th scope="col">Questions</th>
+									<th scope="col">Duration</th>
+									<th scope="col">Edit</th>
+									<th scope="col">Print</th>
+								</tr>
+							</thead>
+							<tbody>
+							{% for i,j in res %}
+								<tr>
+									<td>{{i[0]}}</td>
+									<td>{{i[1]}}</td>
+									<td>{{i[2]}}</td>
+									<td>{{i[3]}}</td>
+									<td>{{i[4]}}</td>
+									<td>
+									<form action="/opentest">
+      <input type="hidden" name ="open_test_id" value={{j.testname}}>
+      <input type="submit" value="Open">
+	  </form>
+	</td>
+										<td>
+									<form action="/downloadtest">
+      <input type="hidden" name ="dwnd_test_id" value={{j.testname}}>
+      <input type="submit" value="Download">
+	  </form>
+	</td>
+								</tr>
+								{%endfor%}
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<footer class="container px-3 py-3">
+		<ul class="list-inline">
+			<li class="list-inline-item mr-3"><a href="/index-get-started">About</a></li>
+			<li class="list-inline-item mr-3"><a href="/index-get-started">How it works</a></li>
+			<li class="list-inline-item mr-3"><a href="/index-get-started">Pricing</a></li>
+			<li class="list-inline-item mr-3"><a href="/index-get-started">Blog</a></li>
+			<li class="list-inline-item mr-3"><a href="/index-get-started">Terms</a></li>
+			<li class="list-inline-item mr-3"><a href="/index-get-started">Privacy</a></li>
+			<li class="list-inline-item mr-3"><a href="/index-get-started">Disclosures</a></li>
+			<li class="list-inline-item mr-3"><a href="/index-get-started">Contact</a></li>
+		</ul>
+		<p class="text-secondary">Markup is a scientific method, based on modern analytics techniques, to measure students' knowledge. It will help in identifying where a student stands, and where he / she can improve.</p>
+		<p class="text-secondary">&copy; Markup. All rights reserved.</p>
+	</footer>
+
+	<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+	<script src={{request.static_url('basics:static/js/bootstrap.min.js')}}></script>
+
+	<link rel="stylesheet" href="https://drvic10k.github.io/bootstrap-sortable/Contents/bootstrap-sortable.css" />
+	<script src="https://drvic10k.github.io/bootstrap-sortable/Scripts/bootstrap-sortable.js"></script>
+
+	<link href="https://fonts.googleapis.com/css?family=Roboto+Condensed" rel="stylesheet">
+
+<input type="hidden" value={{subjects}} id="sub" >
+<input type="hidden" value={{classes}} id="cls" >
+<form method="post" action="/professor-drive">
+<input type="hidden" name="sel_sub" id="sel_sub" value={{sel_sub}} >
+<input type="hidden" name="sel_class" id="sel_class" value={{sel_class}} >
+<input type="submit" style="display:none" id="submit" name="save" >
+</form>
+<script>
+
+
+function myfunc()
+{
+selsub = document.getElementById('sel_sub').value
+selclass = document.getElementById('sel_class').value
+
+var sel_sub = document.getElementById('subval')
+var ele = document.getElementById('sub')
+var val = ele.value
+var arr  = val.split(',')
+var l = arr.length
+for(var j = 0;j<l-1;j++)
+{
+var opt = document.createElement('option')
+opt.text = arr[j]
+if(arr[j] == selsub)
+{
+opt.selected = true
+}
+sel_sub.add(opt)
+}
+var sel_class = document.getElementById('classval')
+var ele = document.getElementById('cls')
+var val = ele.value
+var arr  = val.split(',')
+var l = arr.length
+for(var j = 0;j<l-1;j++)
+{
+var opt = document.createElement('option')
+opt.text = arr[j]
+if(arr[j] == selclass)
+{
+opt.selected = true
+}
+sel_class.add(opt)
+}
+}
+
+
+
+function fetchdata()
+{
+var sel_sub = document.getElementById('subval')
+var sub = sel_sub.options[sel_sub.selectedIndex].text
+var sel_sub_q = document.getElementById('sel_sub')
+sel_sub_q.value = sub
+var sel_class = document.getElementById('classval')
+var cls = sel_class.options[sel_class.selectedIndex].text
+var sel_class_q = document.getElementById('sel_class')
+sel_class_q.value = cls
+var submit = document.getElementById('submit')
+submit.click()
+}
+</script>
+</body>
+</html>
